@@ -1,4 +1,6 @@
 import time
+
+from pathlib import Path
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import Select
@@ -10,7 +12,12 @@ from selenium.webdriver.support import expected_conditions as EC
 separator = "="
 properties = {}
 # http://stackoverflow.com/questions/27945073/how-to-read-properties-file-in-python
-with open('/home/cliff/.secret/properties') as f:
+properties_path = '/home/cliff/.secret/properties'
+my_file = Path("/path/to/file")
+if not my_file.is_file():
+    properties_path = '/Users/Cliff/.secret/properties'
+
+with open('/Users/Cliff/.secret/properties') as f:
     for line in f:
         if separator in line:
             name, value = line.split(separator, 1)
@@ -18,12 +25,15 @@ with open('/home/cliff/.secret/properties') as f:
 travel_url = properties.get('travel_url')
 travel_number = properties.get('travel_number')
 travel_answer = properties.get('travel_answer')
-webhook_url=properties.get('webhook_url')
+webhook_url = properties.get('webhook_url')
+env = properties.get('env')
 
+print ("to start browser")
 driver = webdriver.Chrome('/usr/local/bin/chromedriver')
 driver.get(travel_url)
 
 # 登陆
+print ("to login")
 driver.find_element_by_link_text("继续未完成的申请预约").click()
 driver.find_element_by_id("recordNumberHuifu").send_keys(travel_number)
 select = Select(driver.find_element_by_id('questionIDHuifu'))
@@ -35,6 +45,7 @@ elements = driver.find_elements_by_class_name("ui-button-text")
 elements[1].click()  # 提交
 
 # click 进入预约
+print ("to enter to reservation")
 try:
     enter_reservation = WebDriverWait(driver, 30).until(
         EC.presence_of_element_located((By.XPATH, "//input[@id='myButton']"))
@@ -111,7 +122,7 @@ else:
     print ("No available slot at all!")
 
 #post to slack
-if found_one:
+if found_one and env != 'mbp':
     message = "available date(s) found: " + str(available_date)
     from subprocess import call
     call(["ls", "-l"])

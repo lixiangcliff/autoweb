@@ -13,7 +13,7 @@ separator = "="
 properties = {}
 # http://stackoverflow.com/questions/27945073/how-to-read-properties-file-in-python
 properties_path = '/home/cliff/.secret/properties'
-my_file = Path("/path/to/file")
+my_file = Path(properties_path)
 if not my_file.is_file():
     properties_path = '/Users/Cliff/.secret/properties'
 

@@ -20,7 +20,7 @@ travel_number = properties.get('travel_number')
 travel_answer = properties.get('travel_answer')
 webhook_url=properties.get('webhook_url')
 
-driver = webdriver.Chrome()
+driver = webdriver.Chrome('/usr/local/bin/chromedriver')
 driver.get(travel_url)
 
 # 登陆

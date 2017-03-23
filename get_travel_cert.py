@@ -142,7 +142,7 @@ if found_one:
     from subprocess import call
 
     # call(["ls", "-l"])
-    param = "-t 'Found available date!' -b message -c 'ccjenkins' -u '" + webhook_url + "' -r 'good'"
+    param = "-t 'Found available date!' -b '" + message + "' -c 'ccjenkins' -u '" + webhook_url + "' -r 'good'"
     print ("param:", param)
     if env == 'mbp':
         call("/Users/Cliff/per/repo/script/bash/post_to_slack.sh" + param, shell=True)

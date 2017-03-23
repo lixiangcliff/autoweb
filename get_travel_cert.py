@@ -136,6 +136,6 @@ if found_one and env != 'mbp':
     from subprocess import call
     call(["ls", "-l"])
     call(["/home/cliff/repo/script/bash/post_to_slack.sh", "-t 'Found available date!' -b message -c 'ccjenkin' -u " + webhook_url + "-r 'good'"])
-    pass
+    print ("post to slack", message)
 
 driver.close()

@@ -145,9 +145,9 @@ if found_one:
     param = "-t 'Found available date!' -b '" + message + "' -c 'ccjenkins' -u '" + webhook_url + "' -r 'good'"
     print ("param:", param)
     if env == 'mbp':
-        call("/Users/Cliff/per/repo/script/bash/post_to_slack.sh" + param, shell=True)
+        call("/Users/Cliff/per/repo/script/bash/post_to_slack.sh " + param, shell=True)
     else:
-        call("/home/cliff/repo/script/bash/post_to_slack.sh" + param, shell=True)
+        call("/home/cliff/repo/script/bash/post_to_slack.sh " + param, shell=True)
     print ("post to slack: ", message)
 
 driver.close()

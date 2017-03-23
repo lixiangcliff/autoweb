@@ -106,12 +106,15 @@ reservation_dates = driver.find_elements_by_xpath("//div[@class='fc-event-inner'
 for idx, reservation_date in enumerate(reservation_dates):
     if idx > last_to_check:  # my date is 24 -_-|||
         break
-    if int(reservation_date.text[:-3]) < 85:
-        if int(april_page[idx][2:]) < my_date:  # my date is 24 -_-|||
-            found_one = True
-            available_date.append(april_page[idx])
-        else:
-            print('on ', april_page[idx], 'there are ', str(85 - int(reservation_date.text[0:-3])), 'slot(s) left.')
+    try:
+        if int(reservation_date.text[:-3]) < 85:
+            if int(april_page[idx][2:]) < my_date:  # my date is 24 -_-|||
+                found_one = True
+                available_date.append(april_page[idx])
+            else:
+                print('on ', april_page[idx], 'there are ', str(85 - int(reservation_date.text[0:-3])), 'slot(s) left.')
+    except:
+        print ("march reservation_date failure")
 
 if not found_one:
     print("failed to find any day in april!")

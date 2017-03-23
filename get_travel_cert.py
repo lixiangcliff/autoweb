@@ -1,5 +1,5 @@
 from subprocess import call
-from time import strftime, gmtime
+from time import strftime, localtime
 
 from pathlib import Path
 from selenium import webdriver
@@ -66,7 +66,7 @@ except:
     print("fail to get cur_month")
 
 # take screenshot
-cur_time = strftime("%H-%M-%S_%Y-%m-%d ", gmtime())
+cur_time = strftime("%H-%M-%S_%Y-%m-%d ", localtime())
 driver.get_screenshot_as_file('march_' + cur_time + '.png')
 
 available_date = []
@@ -98,7 +98,7 @@ except:
     print("fail to get cur_month")
 
 # take screenshot
-cur_time = strftime("%H-%M-%S_%Y-%m-%d ", gmtime())
+cur_time = strftime("%H-%M-%S_%Y-%m-%d ", localtime())
 driver.get_screenshot_as_file('april_' + cur_time + '.png')
 april_slots = []
 last_to_check = 20  # 20 at the most 24

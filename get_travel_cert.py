@@ -115,7 +115,7 @@ if found_one:
     message = "available date(s) found: " + str(available_date)
     from subprocess import call
     call(["ls", "-l"])
-    call(["home/cliff/repo/script/bash/post_to_slack.sh", "-t 'Found available date!' -b message -c 'ccjenkin' -u " + webhook_url + "-r 'good'"])
+    call(["/home/cliff/repo/script/bash/post_to_slack.sh", "-t 'Found available date!' -b message -c 'ccjenkin' -u " + webhook_url + "-r 'good'"])
     pass
 
 driver.close()

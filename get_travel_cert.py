@@ -1,4 +1,5 @@
 from subprocess import call
+from time import strftime, gmtime
 
 from pathlib import Path
 from selenium import webdriver
@@ -65,8 +66,8 @@ except:
     print("fail to get cur_month")
 
 # take screenshot
-# cur_time = strftime("%H-%M-%S_%Y-%m-%d ", gmtime())
-driver.get_screenshot_as_file('march.png')
+cur_time = strftime("%H-%M-%S_%Y-%m-%d ", gmtime())
+driver.get_screenshot_as_file('march_' + cur_time + '.png')
 
 available_date = []
 march_page = ['3/27', '3/28', '3/29', '3/30', '3/31', '4/3', '4/4', '4/5', '4/6', '4/7']
@@ -98,8 +99,7 @@ except:
 
 # take screenshot
 # cur_time = strftime("%H-%M-%S_%Y-%m-%d ", gmtime())
-driver.get_screenshot_as_file('april.png')
-
+driver.get_screenshot_as_file('april_' + cur_time + '.png')
 april_slots = []
 last_to_check = 20  # 20 at the most 24
 my_date = 24  # 24
@@ -148,3 +148,5 @@ if found_one:
     print ("post to slack: ", message)
 
 driver.close()
+
+

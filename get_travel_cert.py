@@ -65,8 +65,8 @@ except:
     print("fail to get cur_month")
 
 # take screenshot
-cur_time = strftime("%H-%M-%S_%Y-%m-%d ", gmtime())
-driver.get_screenshot_as_file('march_' + cur_time + ' .png')
+# cur_time = strftime("%H-%M-%S_%Y-%m-%d ", gmtime())
+driver.get_screenshot_as_file('march.png')
 
 available_date = []
 march_page = ['3/27', '3/28', '3/29', '3/30', '3/31', '4/3', '4/4', '4/5', '4/6', '4/7']
@@ -94,8 +94,8 @@ except:
     print("fail to get cur_month")
 
 # take screenshot
-cur_time = strftime("%H-%M-%S_%Y-%m-%d ", gmtime())
-driver.get_screenshot_as_file('april_' + cur_time + ' .png')
+#cur_time = strftime("%H-%M-%S_%Y-%m-%d ", gmtime())
+driver.get_screenshot_as_file('april.png')
 
 april_slots = []
 last_to_check = 24  # 20 at the most 24

@@ -57,8 +57,7 @@ except:
 
 # in 三月
 # need to wait it to show
-# take screenshot
-driver.get_screenshot_as_file('march.png')
+
 try:
     cur_month = WebDriverWait(driver, 60).until(
         EC.presence_of_element_located((By.CLASS_NAME, "fc-header-title"))
@@ -67,6 +66,9 @@ try:
         print("it is march now")
 except:
     print("fail to get cur_month")
+
+# take screenshot
+driver.get_screenshot_as_file('march.png')
 
 available_date = []
 march_page = ['3/27', '3/28', '3/29', '3/30', '3/31', '4/3', '4/4', '4/5', '4/6', '4/7']
@@ -82,8 +84,7 @@ if not found_one:
     print("failed to find any day in march!")
 
 # go to next page(April)
-# take screenshot
-driver.get_screenshot_as_file('april.png')
+
 driver.find_element_by_class_name("ui-icon-circle-triangle-e").click()
 try:
     cur_month = WebDriverWait(driver, 60).until(
@@ -93,6 +94,9 @@ try:
         print("it is April now")
 except:
     print("fail to get cur_month")
+
+# take screenshot
+driver.get_screenshot_as_file('april.png')
 
 april_slots = []
 last_to_check = 24  # 20 at the most 24

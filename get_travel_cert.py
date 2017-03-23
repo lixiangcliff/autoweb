@@ -73,10 +73,13 @@ march_page = ['3/27', '3/28', '3/29', '3/30', '3/31', '4/3', '4/4', '4/5', '4/6'
 reservation_dates = driver.find_elements_by_xpath("//div[@class='fc-event-inner']/span")
 found_one = False
 for idx, reservation_date in enumerate(reservation_dates):
-    if int(reservation_date.text[0:-3]) < 85:
-        found_one = True
-        print ("find one day!: " + march_page[idx])
-        available_date.append(march_page[idx])
+    try:
+        if int(reservation_date.text[0:-3]) < 85:
+            found_one = True
+            print ("find one day!: " + march_page[idx])
+            available_date.append(march_page[idx])
+    except:
+        print ("march reservation_date failure: ", idx)
 
 if not found_one:
     print("failed to find any day in march!")
@@ -114,7 +117,7 @@ for idx, reservation_date in enumerate(reservation_dates):
             else:
                 print('on ', april_page[idx], 'there are ', str(85 - int(reservation_date.text[0:-3])), 'slot(s) left.')
     except:
-        print ("march reservation_date failure")
+        print ("march reservation_date failure: ", idx)
 
 if not found_one:
     print("failed to find any day in april!")

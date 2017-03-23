@@ -10,7 +10,7 @@ from selenium.webdriver.support import expected_conditions as EC
 separator = "="
 properties = {}
 # http://stackoverflow.com/questions/27945073/how-to-read-properties-file-in-python
-with open('/home/jenkins/.secret') as f:
+with open('/home/cliff/.secret') as f:
     for line in f:
         if separator in line:
             name, value = line.split(separator, 1)
@@ -115,7 +115,7 @@ if found_one:
     message = "available date(s) found: " + str(available_date)
     from subprocess import call
     call(["ls", "-l"])
-    call(["home/jenkins/repo/script/bash/post_to_slack.sh", "-t 'Found available date!' -b message -c 'ccjenkin' -u " + webhook_url + "-r 'good'"])
+    call(["home/cliff/repo/script/bash/post_to_slack.sh", "-t 'Found available date!' -b message -c 'ccjenkin' -u " + webhook_url + "-r 'good'"])
     pass
 
 driver.close()

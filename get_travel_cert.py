@@ -17,7 +17,7 @@ my_file = Path(properties_path)
 if not my_file.is_file():
     properties_path = '/Users/Cliff/.secret/properties'
 
-with open('/Users/Cliff/.secret/properties') as f:
+with open(properties_path) as f:
     for line in f:
         if separator in line:
             name, value = line.split(separator, 1)

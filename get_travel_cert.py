@@ -31,8 +31,7 @@ env = properties.get('env')
 print ("to start browser")
 driver = webdriver.Chrome('/usr/local/bin/chromedriver')
 driver.get(travel_url)
-# take screenshot
-driver.get_screenshot_as_file('test_screenshot.png')
+
 
 # 登陆
 print ("to login")
@@ -58,6 +57,8 @@ except:
 
 # in 三月
 # need to wait it to show
+# take screenshot
+driver.get_screenshot_as_file('march.png')
 try:
     cur_month = WebDriverWait(driver, 60).until(
         EC.presence_of_element_located((By.CLASS_NAME, "fc-header-title"))
@@ -81,6 +82,8 @@ if not found_one:
     print("failed to find any day in march!")
 
 # go to next page(April)
+# take screenshot
+driver.get_screenshot_as_file('april.png')
 driver.find_element_by_class_name("ui-icon-circle-triangle-e").click()
 try:
     cur_month = WebDriverWait(driver, 60).until(

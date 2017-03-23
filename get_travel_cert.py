@@ -98,7 +98,7 @@ except:
     print("fail to get cur_month")
 
 # take screenshot
-# cur_time = strftime("%H-%M-%S_%Y-%m-%d ", gmtime())
+cur_time = strftime("%H-%M-%S_%Y-%m-%d ", gmtime())
 driver.get_screenshot_as_file('april_' + cur_time + '.png')
 april_slots = []
 last_to_check = 20  # 20 at the most 24

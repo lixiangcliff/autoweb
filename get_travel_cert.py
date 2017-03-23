@@ -94,7 +94,7 @@ except:
     print("fail to get cur_month")
 
 # take screenshot
-#cur_time = strftime("%H-%M-%S_%Y-%m-%d ", gmtime())
+# cur_time = strftime("%H-%M-%S_%Y-%m-%d ", gmtime())
 driver.get_screenshot_as_file('april.png')
 
 april_slots = []
@@ -131,13 +131,17 @@ else:
     print ("No available slot at all!")
 
 # post to slack
-if found_one and env != 'mbp':
+if found_one:
     message = "available date(s) found: " + str(available_date)
     from subprocess import call
 
     call(["ls", "-l"])
-    call(["/home/cliff/repo/script/bash/post_to_slack.sh",
-          "-t 'Found available date!' -b message -c 'ccjenkin' -u " + webhook_url + "-r 'good'"])
-    print ("post to slack", message)
+    if env == 'mbp':
+        call(["/Users/Cliff/per/repo/script/bash/post_to_slack.sh",
+              "-t 'Found available date!' -b message -c 'ccjenkins' -u " + webhook_url + "-r 'good'"])
+    else:
+        call(["/home/cliff/repo/script/bash/post_to_slack.sh",
+              "-t 'Found available date!' -b message -c 'ccjenkins' -u " + webhook_url + "-r 'good'"])
+    print ("post to slack; ", message)
 
 driver.close()

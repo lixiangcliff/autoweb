@@ -1,12 +1,10 @@
-import time
+from time import gmtime, strftime
 
 from pathlib import Path
 from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.support.ui import Select
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import Select, WebDriverWait
 
 # prepare properties
 separator = "="
@@ -31,7 +29,6 @@ env = properties.get('env')
 print ("to start browser")
 driver = webdriver.Chrome('/usr/local/bin/chromedriver')
 driver.get(travel_url)
-
 
 # 登陆
 print ("to login")
@@ -68,7 +65,8 @@ except:
     print("fail to get cur_month")
 
 # take screenshot
-driver.get_screenshot_as_file('march.png')
+cur_time = strftime("%H-%M-%S_%Y-%m-%d ", gmtime())
+driver.get_screenshot_as_file('march_' + cur_time + ' .png')
 
 available_date = []
 march_page = ['3/27', '3/28', '3/29', '3/30', '3/31', '4/3', '4/4', '4/5', '4/6', '4/7']
@@ -96,18 +94,20 @@ except:
     print("fail to get cur_month")
 
 # take screenshot
-driver.get_screenshot_as_file('april.png')
+cur_time = strftime("%H-%M-%S_%Y-%m-%d ", gmtime())
+driver.get_screenshot_as_file('april_' + cur_time + ' .png')
 
 april_slots = []
 last_to_check = 24  # 20 at the most 24
 my_date = 28  # 24
-april_page = ['3/27', '3/28', '3/29', '3/30', '3/31', '4/3', '4/10', '4/17', '4/24', '4/4', '4/11', '4/18', '4/25', '4/5', '4/12', '4/19', '4/26', '4/6', '4/13', '4/20', '4/27', '4/7', '4/14', '4/21', '4/28']
+april_page = ['3/27', '3/28', '3/29', '3/30', '3/31', '4/3', '4/10', '4/17', '4/24', '4/4', '4/11', '4/18', '4/25',
+              '4/5', '4/12', '4/19', '4/26', '4/6', '4/13', '4/20', '4/27', '4/7', '4/14', '4/21', '4/28']
 reservation_dates = driver.find_elements_by_xpath("//div[@class='fc-event-inner']/span")
 for idx, reservation_date in enumerate(reservation_dates):
-    if idx > last_to_check: # my date is 24 -_-|||
+    if idx > last_to_check:  # my date is 24 -_-|||
         break
     if int(reservation_date.text[:-3]) < 85:
-        if int(april_page[idx][2:]) < my_date: # my date is 24 -_-|||
+        if int(april_page[idx][2:]) < my_date:  # my date is 24 -_-|||
             found_one = True
             available_date.append(april_page[idx])
         else:
@@ -130,12 +130,14 @@ if available_date:
 else:
     print ("No available slot at all!")
 
-#post to slack
+# post to slack
 if found_one and env != 'mbp':
     message = "available date(s) found: " + str(available_date)
     from subprocess import call
+
     call(["ls", "-l"])
-    call(["/home/cliff/repo/script/bash/post_to_slack.sh", "-t 'Found available date!' -b message -c 'ccjenkin' -u " + webhook_url + "-r 'good'"])
+    call(["/home/cliff/repo/script/bash/post_to_slack.sh",
+          "-t 'Found available date!' -b message -c 'ccjenkin' -u " + webhook_url + "-r 'good'"])
     print ("post to slack", message)
 
 driver.close()

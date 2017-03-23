@@ -31,6 +31,8 @@ env = properties.get('env')
 print ("to start browser")
 driver = webdriver.Chrome('/usr/local/bin/chromedriver')
 driver.get(travel_url)
+# take screenshot
+driver.get_screenshot_as_file('test_screenshot.png')
 
 # 登陆
 print ("to login")

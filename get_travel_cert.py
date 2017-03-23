@@ -79,7 +79,7 @@ for idx, reservation_date in enumerate(reservation_dates):
             print ("find one day!: " + march_page[idx])
             available_date.append(march_page[idx])
     except:
-        print ("march reservation_date failure: ", idx)
+        print ("march reservation_date failure: ", march_page[idx])
 
 if not found_one:
     print("failed to find any day in march!")
@@ -117,7 +117,7 @@ for idx, reservation_date in enumerate(reservation_dates):
             else:
                 print('on ', april_page[idx], 'there are ', str(85 - int(reservation_date.text[0:-3])), 'slot(s) left.')
     except:
-        print ("march reservation_date failure: ", idx)
+        print ("april reservation_date failure: ", april_page[idx])
 
 if not found_one:
     print("failed to find any day in april!")
@@ -141,12 +141,13 @@ if found_one:
     message = "available date(s) found: " + str(available_date)
     from subprocess import call
 
-    #call(["ls", "-l"])
+    # call(["ls", "-l"])
     param = "-t 'Found available date!' -b message -c 'ccjenkins' -u '" + webhook_url + "' -r 'good'"
+    print ("param:", param)
     if env == 'mbp':
-        call(["/Users/Cliff/per/repo/script/bash/post_to_slack.sh", param])
+        call("/Users/Cliff/per/repo/script/bash/post_to_slack.sh" + param, shell=True)
     else:
-        call(["/home/cliff/repo/script/bash/post_to_slack.sh", param])
+        call("/home/cliff/repo/script/bash/post_to_slack.sh" + param, shell=True)
     print ("post to slack: ", message)
 
 driver.close()

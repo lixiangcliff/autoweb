@@ -137,14 +137,10 @@ else:
     print ("No available slot at all!")
 
 # post to slack
-if found_one:
+if found_one and env != 'mbp':
     message = "available date(s) found: " + str(available_date)
-
     param = "-t 'Found available date!' -b '" + message + "' -c 'ccjenkins' -u '" + webhook_url + "' -r 'good'"
-    if env == 'mbp':
-        call("/Users/Cliff/per/repo/script/bash/post_to_slack.sh " + param, shell=True)
-    else:
-        call("/home/cliff/repo/script/bash/post_to_slack.sh " + param, shell=True)
+    call("/home/cliff/repo/script/bash/post_to_slack.sh " + param, shell=True)
     print ("post to slack: ", message)
 
 driver.close()

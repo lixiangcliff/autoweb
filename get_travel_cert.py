@@ -138,7 +138,7 @@ else:
 
 # post to slack
 if found_one and env != 'mbp':
-    message = "@channel available date(s) found: " + str(available_date)
+    message = "available date(s) found: " + str(available_date)
     param = "-t 'Found available date!' -b '" + message + "' -c 'ccjenkins' -u '" + webhook_url + "' -r 'good'"
     call("/home/cliff/repo/script/bash/post_to_slack.sh " + param, shell=True)
     print ("post to slack: ", message)

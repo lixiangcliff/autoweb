@@ -111,7 +111,7 @@ for idx, reservation_date in enumerate(reservation_dates):
         break
     try:
         if int(reservation_date.text[:-3]) < 85:
-            if int(april_page[idx][2:]) < my_date:  # my date is 24 -_-|||
+            if int(april_page[idx][2:]) < my_date or int(april_page[idx][:1] == 3):  # my date is 24 -_-|||
                 found_one = True
                 available_date.append(april_page[idx])
             else:

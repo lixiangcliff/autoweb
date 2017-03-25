@@ -136,13 +136,24 @@ if available_date:
 else:
     print ("No available slot at all!")
 
-# post to slack
 if found_one and env != 'mbp':
     message = "available date(s) found: " + str(available_date)
+    # post to slack
     param = "-t 'Found available date!' -b '" + message + "' -c 'ccjenkins' -u '" + webhook_url + "' -r 'good'"
     call("/home/cliff/repo/script/bash/post_to_slack.sh " + param, shell=True)
+    print ("Found slot!")
     print ("post to slack: ", message)
 
+    # send email
+    # #email_path = '/home/cliff/tmp/email.txt'
+    # email_path = '/Users/Cliff/tmp/email.txt'
+    #
+    # f = open(email_path, 'w')
+    # f.write('Subject: ' + message + '\n')  # python will convert \n to os.linesep
+    # f.close()
+    # recipients = "lixiang.cliff@gmail.com, lixiang.cliff@outlook.com"
+    # call("sendmail " + recipients + " < " + email_path, shell=True)
+    # print ("send mail to: " + recipients)
 driver.close()
 
 

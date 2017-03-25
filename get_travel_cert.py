@@ -69,21 +69,16 @@ except:
 cur_time = strftime("%H-%M-%S_%Y-%m-%d ", localtime())
 driver.get_screenshot_as_file('march_' + cur_time + '.png')
 
-available_date = []
+available_dates = []
 march_page = ['3/27', '3/28', '3/29', '3/30', '3/31', '4/3', '4/4', '4/5', '4/6', '4/7']
 reservation_dates = driver.find_elements_by_xpath("//div[@class='fc-event-inner']/span")
-found_one = False
 for idx, reservation_date in enumerate(reservation_dates):
     try:
         if int(reservation_date.text[0:-3]) < 85:
-            found_one = True
             print ("find one day!: " + march_page[idx])
-            available_date.append(march_page[idx])
+            available_dates.append(march_page[idx])
     except:
         print ("march reservation_date failure: ", march_page[idx])
-
-if not found_one:
-    print("failed to find any day in march!")
 
 # go to next page(April)
 
@@ -112,15 +107,12 @@ for idx, reservation_date in enumerate(reservation_dates):
     try:
         if int(reservation_date.text[:-3]) < 85:
             if int(april_page[idx][2:]) < my_date or int(april_page[idx][:1] == 3):  # my date is 24 -_-|||
-                found_one = True
-                available_date.append(april_page[idx])
+                available_dates.append(april_page[idx])
             else:
                 print('on ', april_page[idx], 'there are ', str(85 - int(reservation_date.text[0:-3])), 'slot(s) left.')
     except:
         print ("april reservation_date failure: ", april_page[idx])
 
-if not found_one:
-    print("failed to find any day in april!")
 
 # date_boxes = driver.find_elements_by_class_name("ui-widget-content")
 # for idx, date_box in enumerate(date_boxes):
@@ -131,13 +123,21 @@ if not found_one:
 #     if idx in april_slots:
 #         available_date.append('4/' + str(date_box.text).strip())
 
-if available_date:
-    print ("all available dates: ", available_date)
+if available_dates:
+    print ("all available dates: ", available_dates)
 else:
     print ("No available slot at all!")
 
-if found_one and env != 'mbp':
-    message = "available date(s) found: " + str(available_date)
+print ('rule out Thursdays')
+thursdays = ['3/30', '4/6', '4/13', '4/20', '4/27']
+for thursday in thursdays:
+    if thursday in available_dates:
+        available_dates.remove(thursday)
+        print ('remove: ', thursday)
+
+# mbp does not support slack bot
+if available_dates and env != 'mbp':
+    message = "available date(s) found: " + str(available_dates)
     # post to slack
     param = "-t 'Found available date!' -b '" + message + "' -c 'ccjenkins' -u '" + webhook_url + "' -r 'good'"
     call("/home/cliff/repo/script/bash/post_to_slack.sh " + param, shell=True)

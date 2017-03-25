@@ -139,7 +139,8 @@ for thursday in thursdays:
 if available_dates and env != 'mbp':
     message = "available date(s) found: " + str(available_dates)
     # post to slack
-    param = "-t 'Found available date!' -b '" + message + "' -c 'ccjenkins' -u '" + webhook_url + "' -r 'good'"
+    #param = "-t 'Found available date!' -b '" + message + "' -c 'ccjenkins' -u '" + webhook_url + "' -r 'good'"
+    param = "-t '" + message + "' -b 'congrates!' -c 'ccjenkins' -u '" + webhook_url + "' -r 'good'"
     call("/home/cliff/repo/script/bash/post_to_slack.sh " + param, shell=True)
     print ("Found slot!")
     print ("post to slack: ", message)
@@ -154,6 +155,8 @@ if available_dates and env != 'mbp':
     # recipients = "lixiang.cliff@gmail.com, lixiang.cliff@outlook.com"
     # call("sendmail " + recipients + " < " + email_path, shell=True)
     # print ("send mail to: " + recipients)
+else:
+    print ('No available slot at all!')
 driver.close()
 
 

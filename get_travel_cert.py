@@ -70,7 +70,7 @@ cur_time = strftime("%H-%M-%S_%Y-%m-%d ", localtime())
 driver.get_screenshot_as_file('march_' + cur_time + '.png')
 
 available_dates = []
-march_page = ['3/27', '3/28', '3/29', '3/30', '3/31', '4/3', '4/4', '4/5', '4/6', '4/7']
+march_page = ['3/28', '3/29', '3/30', '3/31', '4/3', '4/4', '4/5', '4/6', '4/7']
 reservation_dates = driver.find_elements_by_xpath("//div[@class='fc-event-inner']/span")
 for idx, reservation_date in enumerate(reservation_dates):
     try:

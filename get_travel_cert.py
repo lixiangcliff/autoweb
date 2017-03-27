@@ -107,9 +107,10 @@ for idx, reservation_date in enumerate(reservation_dates):
     try:
         if int(reservation_date.text[:-3]) < 85:
             if int(april_page[idx][2:]) < my_date or int(april_page[idx][:1] == 3):  # my date is 24 -_-|||
+                print ("find one day!: " + april_page[idx])
                 available_dates.append(april_page[idx])
             else:
-                print('on ', april_page[idx], 'there are ', str(85 - int(reservation_date.text[0:-3])), 'slot(s) left.')
+                print('(not applicable for us though)on ', april_page[idx], 'there are ', str(85 - int(reservation_date.text[0:-3])), 'slot(s) left.')
     except:
         print ("april reservation_date failure: ", april_page[idx])
 

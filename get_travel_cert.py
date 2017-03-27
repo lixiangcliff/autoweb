@@ -70,7 +70,7 @@ cur_time = strftime("%H-%M-%S_%Y-%m-%d ", localtime())
 driver.get_screenshot_as_file('march_' + cur_time + '.png')
 
 available_dates = []
-march_page = ['3/29', '3/30', '3/31', '4/3', '4/4', '4/5', '4/6', '4/7']
+march_page = ['3/30', '3/31', '4/3', '4/4', '4/5', '4/6', '4/7']
 reservation_dates = driver.find_elements_by_xpath("//div[@class='fc-event-inner']/span")
 for idx, reservation_date in enumerate(reservation_dates):
     try:
@@ -98,7 +98,7 @@ driver.get_screenshot_as_file('april_' + cur_time + '.png')
 april_slots = []
 last_to_check = 20  # 20 at the most 24
 my_date = 24  # 24 at the most 28
-april_page = ['3/29', '3/30', '3/31', '4/3', '4/10', '4/17', '4/24', '4/4', '4/11', '4/18', '4/25',
+april_page = ['3/30', '3/31', '4/3', '4/10', '4/17', '4/24', '4/4', '4/11', '4/18', '4/25',
               '4/5', '4/12', '4/19', '4/26', '4/6', '4/13', '4/20', '4/27', '4/7', '4/14', '4/21', '4/28']
 reservation_dates = driver.find_elements_by_xpath("//div[@class='fc-event-inner']/span")
 for idx, reservation_date in enumerate(reservation_dates):
@@ -134,6 +134,13 @@ else:
 #     if thursday in available_dates:
 #         available_dates.remove(thursday)
 #         print ('remove: ', thursday)
+
+print ('rule out date after mine')
+later_days = ['4/24', '4/25', '4/26', '4/27', '4/28']
+for later_day in later_days:
+    if later_day in available_dates:
+        available_dates.remove(later_day)
+        print ('remove: ', later_day)
 
 # mbp does not support slack bot
 if available_dates and env != 'mbp':

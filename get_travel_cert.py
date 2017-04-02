@@ -105,12 +105,13 @@ april_page = ['4/10', '4/17', '4/24', '4/4', '4/11', '4/18', '4/25',
               '4/5', '4/12', '4/19', '4/26', '4/6', '4/13', '4/20', '4/27', '4/7', '4/14', '4/21', '4/28']
 reservation_dates = driver.find_elements_by_xpath("//div[@class='fc-event-inner']/span")
 
+april_info = []
 for rd in reservation_dates:
     try:
-        rd_info = rd.text
-        print (rd_info)
+        april_info.append(rd.text)
     except:
         pass
+print ('april_info: ', april_info)
 
 for idx, reservation_date in enumerate(reservation_dates):
     if idx > last_to_check:  # my date is 24 -_-|||

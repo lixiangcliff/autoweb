@@ -106,15 +106,15 @@ april_page = ['4/10', '4/17', '4/24', '4/4', '4/11', '4/18', '4/25',
 
 # driver.implicitly_wait(2)
 
-reservation_dates = driver.find_elements_by_xpath("//div[@class='fc-event-inner']/span")
-
-april_info = []
-for rd in reservation_dates:
-    try:
-        april_info.append(rd.text)
-    except:
-        pass
-print ('april_info: ', april_info)
+# reservation_dates = driver.find_elements_by_xpath("//div[@class='fc-event-inner']/span")
+#
+# april_info = []
+# for rd in reservation_dates:
+#     try:
+#         april_info.append(rd.text)
+#     except:
+#         pass
+# print ('april_info: ', april_info)
 
 reservation_dates = driver.find_elements_by_xpath("//div[@class='fc-event-inner']/span")
 count = 0

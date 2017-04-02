@@ -56,19 +56,20 @@ except:
 
 available_dates = set()
 
-# in 三月
+
 # need to wait it to show
 
-# try:
-#     cur_month = WebDriverWait(driver, 60).until(
-#         EC.presence_of_element_located((By.CLASS_NAME, "fc-header-title"))
-#     )
-#     if cur_month.text == "三月 2017":
-#         print("it is march now")
-# except:
-#     print("fail to get cur_month")
-#
-# # take screenshot
+try:
+    cur_month = WebDriverWait(driver, 60).until(
+        EC.presence_of_element_located((By.CLASS_NAME, "fc-header-title"))
+    )
+    if cur_month.text == "四月 2017":
+        print("it is april now")
+except:
+    print("fail to get cur_month")
+
+# in 三月
+# take screenshot
 # cur_time = strftime("%H-%M-%S_%Y-%m-%d ", localtime())
 # driver.get_screenshot_as_file('march_' + cur_time + '.png')
 

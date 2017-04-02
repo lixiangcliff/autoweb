@@ -1,5 +1,5 @@
 from subprocess import call
-from time import strftime, localtime
+from time import strftime, localtime, time
 
 from pathlib import Path
 from selenium import webdriver
@@ -103,6 +103,9 @@ last_to_check = 15  # 20 at the most 24
 my_date = 12  # 24 at the most 28
 april_page = ['4/10', '4/17', '4/24', '4/4', '4/11', '4/18', '4/25',
               '4/5', '4/12', '4/19', '4/26', '4/6', '4/13', '4/20', '4/27', '4/7', '4/14', '4/21', '4/28']
+
+time.sleep(2)
+
 reservation_dates = driver.find_elements_by_xpath("//div[@class='fc-event-inner']/span")
 
 april_info = []

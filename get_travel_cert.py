@@ -113,6 +113,7 @@ for rd in reservation_dates:
         pass
 print ('april_info: ', april_info)
 
+reservation_dates = driver.find_elements_by_xpath("//div[@class='fc-event-inner']/span")
 for idx, reservation_date in enumerate(reservation_dates):
     if idx > last_to_check:  # my date is 24 -_-|||
         break

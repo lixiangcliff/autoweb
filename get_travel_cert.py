@@ -99,8 +99,8 @@ except:
 cur_time = strftime("%H-%M-%S_%Y-%m-%d ", localtime())
 driver.get_screenshot_as_file('april_' + cur_time + '.png')
 april_slots = []
-last_to_check = 20  # 20 at the most 24
-my_date = 24  # 24 at the most 28
+last_to_check = 16  # 20 at the most 24
+my_date = 12  # 24 at the most 28
 april_page = ['4/10', '4/17', '4/24', '4/4', '4/11', '4/18', '4/25',
               '4/5', '4/12', '4/19', '4/26', '4/6', '4/13', '4/20', '4/27', '4/7', '4/14', '4/21', '4/28']
 reservation_dates = driver.find_elements_by_xpath("//div[@class='fc-event-inner']/span")
@@ -109,7 +109,7 @@ for idx, reservation_date in enumerate(reservation_dates):
         break
     try:
         if int(reservation_date.text[:-3]) < 85:
-            if int(april_page[idx][2:]) < my_date or int(april_page[idx][:1] == 3):  # my date is 24 -_-|||
+            if int(april_page[idx][2:]) < my_date: # or int(april_page[idx][:1] == 3):  # my date is 24 -_-|||
                 print ("find one day!: " + april_page[idx])
                 available_dates.add(april_page[idx])
             else:

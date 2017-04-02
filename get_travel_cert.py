@@ -99,11 +99,19 @@ except:
 cur_time = strftime("%H-%M-%S_%Y-%m-%d ", localtime())
 driver.get_screenshot_as_file('april_' + cur_time + '.png')
 april_slots = []
-last_to_check = 16  # 20 at the most 24
+last_to_check = 15  # 20 at the most 24
 my_date = 12  # 24 at the most 28
 april_page = ['4/10', '4/17', '4/24', '4/4', '4/11', '4/18', '4/25',
               '4/5', '4/12', '4/19', '4/26', '4/6', '4/13', '4/20', '4/27', '4/7', '4/14', '4/21', '4/28']
 reservation_dates = driver.find_elements_by_xpath("//div[@class='fc-event-inner']/span")
+
+for rd in reservation_dates:
+    try:
+        rd_info = rd.text
+        print (rd_info)
+    except:
+        pass
+
 for idx, reservation_date in enumerate(reservation_dates):
     if idx > last_to_check:  # my date is 24 -_-|||
         break

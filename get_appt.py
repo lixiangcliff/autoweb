@@ -23,8 +23,8 @@ def wait_a_bit():
 
 
 Log_Format = "%(levelname)s %(asctime)s - %(message)s"
-log_dir = "/Users/cli/test/"
-#log_dir = "/home/ubuntu/log/"
+# log_dir = "/Users/cli/test/"
+log_dir = "/home/ubuntu/log/"
 logging.basicConfig(filename = log_dir + datetime.now().strftime('logfile_%Y-%m-%d_%H-%M-%S.log'),
                     #stream = sys.stdout,
                     filemode = "w",
@@ -37,8 +37,8 @@ separator = "="
 properties = {}
 
 # http://stackoverflow.com/questions/27945073/how-to-read-properties-file-in-python
-#properties_path = '/home/cliff/.secret/properties'
-properties_path = '/Users/cli/.secret/properties'
+# properties_path = '/Users/cli/.secret/properties'
+properties_path = '/home/ubuntu/.secret/properties'
 
 my_file = Path(properties_path)
 if not my_file.is_file():

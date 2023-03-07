@@ -10,6 +10,8 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.chrome.options import Options
+import platform
 
 
 def notify_by_slack(date):
@@ -22,9 +24,40 @@ def wait_a_bit():
     sleep(random.uniform(0.1, 1.0))
 
 
+options = Options()
+# browser is Chromium instead of Chrome
+options.BinaryLocation = "/usr/bin/chromium-browser"
+
+options.add_argument("--headless")  # if you want it headless
+options.add_argument("--no-sandbox")  # Bypass OS security model
+options.add_argument("--disable-dev-shm-usage")  # overcome limited resource problems
+
+# options.add_argument("--remote-debugging-port=9222")
+# options.add_argument('--disable-features=VizDisplayCompositor')
+# options.add_argument("--disable-infobars")  # disabling infobars
+# options.add_argument("--disable-extensions")  # disabling extensions
+# options.add_argument("start-maximized")  # open Browser in maximized mode
+# options.add_argument("--disable-gpu")  # applicable to windows os only
+
+log_dir = ''
+properties_path = ''
+
+if platform.system() == "Linux" and platform.machine() == "armv7l":
+    # if raspi
+    options.binary_location = ("/usr/bin/chromium-browser")
+    service = Service("/usr/bin/chromedriver")
+    log_dir = "/home/cliff/log/"
+    properties_path = '/home/cliff/.secret/properties'
+
+
+else:  # if not raspi and considering you're using Chrome
+    service = Service(ChromeDriverManager().install())
+    if platform.system() == "Darwin":
+        log_dir = "/Users/cli/log/"
+        properties_path = '/Users/cli/.secret/properties'
+
 Log_Format = "%(levelname)s %(asctime)s - %(message)s"
-# log_dir = "/Users/cli/test/"
-log_dir = "/home/ubuntu/log/"
+
 logging.basicConfig(filename = log_dir + datetime.now().strftime('logfile_%Y-%m-%d_%H-%M-%S.log'),
                     #stream = sys.stdout,
                     filemode = "w",
@@ -37,12 +70,10 @@ separator = "="
 properties = {}
 
 # http://stackoverflow.com/questions/27945073/how-to-read-properties-file-in-python
-# properties_path = '/Users/cli/.secret/properties'
-properties_path = '/home/ubuntu/.secret/properties'
 
 my_file = Path(properties_path)
 if not my_file.is_file():
-    properties_path = '/home/ubuntu/.secret/properties'
+    properties_path = '/home/cliff/.secret/properties'
 
 with open(properties_path) as f:
     for line in f:
@@ -61,7 +92,11 @@ available_xpath = "//*[@id='weekDiv']//*[@class='span2 calday ']"
 next_week_button_xpath = "//*[@id='nextWeekButton']//a[@href='#futureAppointmentSub']"
 
 logger.info("to start browser")
-driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
+
+driver = webdriver.Chrome(
+    service=service,
+    options=options,
+    )
 driver.get(appt_url)
 
 # login tracking

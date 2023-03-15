@@ -1,5 +1,6 @@
 import logging
 import random
+import sys
 from datetime import datetime
 from datetime import datetime as dt
 from pathlib import Path
@@ -28,9 +29,6 @@ options = Options()
 # browser is Chromium instead of Chrome
 options.BinaryLocation = "/usr/bin/chromium-browser"
 
-options.add_argument("--headless")  # if you want it headless
-options.add_argument("--no-sandbox")  # Bypass OS security model
-options.add_argument("--disable-dev-shm-usage")  # overcome limited resource problems
 
 # options.add_argument("--remote-debugging-port=9222")
 # options.add_argument('--disable-features=VizDisplayCompositor')
@@ -44,12 +42,13 @@ properties_path = ''
 
 if platform.system() == "Linux" and platform.machine() == "armv7l":
     # if raspi
+    options.add_argument("--headless")  # if you want it headless
+    options.add_argument("--no-sandbox")  # Bypass OS security model
+    options.add_argument("--disable-dev-shm-usage")  # overcome limited resource problems
     options.binary_location = ("/usr/bin/chromium-browser")
     service = Service("/usr/bin/chromedriver")
     log_dir = "/home/cliff/log/"
     properties_path = '/home/cliff/.secret/properties'
-
-
 else:  # if not raspi and considering you're using Chrome
     service = Service(ChromeDriverManager().install())
     if platform.system() == "Darwin":
@@ -58,7 +57,7 @@ else:  # if not raspi and considering you're using Chrome
 
 Log_Format = "%(levelname)s %(asctime)s - %(message)s"
 
-logging.basicConfig(filename = log_dir + datetime.now().strftime('logfile_%Y-%m-%d_%H-%M-%S.log'),
+logging.basicConfig(filename = log_dir + datetime.now().strftime('get_appt_%Y-%m-%d_%H-%M-%S.log'),
                     #stream = sys.stdout,
                     filemode = "w",
                     format = Log_Format,

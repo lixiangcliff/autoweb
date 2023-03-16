@@ -13,6 +13,7 @@ from selenium.webdriver.common.by import By
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.options import Options
 import platform
+from selenium import webdriver
 
 
 def notify_by_slack(date):
@@ -97,6 +98,7 @@ try:
         service=service,
         options=options,
         )
+    driver.maximize_window()
     driver.get(appt_url)
 
     # login tracking
@@ -105,6 +107,7 @@ try:
     driver.find_element(By.ID, "orderid").send_keys(order_number)
     driver.find_element(By.NAME, "email").send_keys(email)
     driver.find_element(By.ID, "password").send_keys(pw)
+    driver.save_screenshot(log_dir + "screenshot.png")
     driver.find_element(By.ID, "loginButton").click()
 
     # reschedule

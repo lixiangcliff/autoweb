@@ -87,52 +87,55 @@ webhook_url = properties.get('webhook_url')
 
 date_pattern = '%m/%d/%Y'
 scheduled_date_str = '1/23/2024'
-available_xpath = "//*[@id='weekDiv']//*[@class='span2 calday ']"
+available_xpath = "//*[@id='weekDiv']//*[@class='col-md-2 calday ']"
 next_week_button_xpath = "//*[@id='nextWeekButton']//a[@href='#futureAppointmentSub']"
 
-logger.info("to start browser")
+try:
+    logger.info("to start browser")
 
-driver = webdriver.Chrome(
-    service=service,
-    options=options,
-    )
-driver.get(appt_url)
+    driver = webdriver.Chrome(
+        service=service,
+        options=options,
+        )
+    driver.get(appt_url)
 
-# login tracking
-logger.info("Login")
-wait_a_bit()
-driver.find_element(By.ID, "orderid").send_keys(order_number)
-driver.find_element(By.NAME, "email").send_keys(email)
-driver.find_element(By.ID, "password").send_keys(pw)
-driver.find_element(By.ID, "loginButton").click()
-
-# reschedule
-logger.info("Reschedule")
-wait_a_bit()
-driver.find_element(By.ID, "rescheduleButton").click()
-found_slot = False
-while not found_slot:
+    # login tracking
+    logger.info("Login")
     wait_a_bit()
-    dayBoxes = driver.find_elements(By.XPATH, available_xpath)
-    if dayBoxes:
-        dayBox = dayBoxes[0]
-        text = dayBox.text
-        found_date_str = text.splitlines()[1]
-        scheduled_date = dt.strptime(scheduled_date_str, date_pattern)
-        found_date = dt.strptime(found_date_str, date_pattern)
-        if found_date < scheduled_date:
-            logger.info("Found an early slot!!!")
-            notify_by_slack(found_date_str)
-            # send slack message here!!!
+    driver.find_element(By.ID, "orderid").send_keys(order_number)
+    driver.find_element(By.NAME, "email").send_keys(email)
+    driver.find_element(By.ID, "password").send_keys(pw)
+    driver.find_element(By.ID, "loginButton").click()
+
+    # reschedule
+    logger.info("Reschedule")
+    wait_a_bit()
+    driver.find_element(By.ID, "rescheduleButton").click()
+    found_slot = False
+    while not found_slot:
+        wait_a_bit()
+        dayBoxes = driver.find_elements(By.XPATH, available_xpath)
+        if dayBoxes:
+            dayBox = dayBoxes[0]
+            text = dayBox.text
+            found_date_str = text.splitlines()[1]
+            scheduled_date = dt.strptime(scheduled_date_str, date_pattern)
+            found_date = dt.strptime(found_date_str, date_pattern)
+            if found_date < scheduled_date:
+                logger.info("Found an early slot!!!")
+                notify_by_slack(found_date_str)
+                # send slack message here!!!
+            else:
+                logger.info("Not found a better one...")
+            found_slot = True
         else:
-            logger.info("Not found a better one...")
-        found_slot = True
-    else:
-        driver.find_element(By.XPATH, next_week_button_xpath).click()
+            driver.find_element(By.XPATH, next_week_button_xpath).click()
 
-wait_a_bit()
+    wait_a_bit()
 
-driver.close()
+    driver.close()
+except Exception as e:
+    logger.error("Errors: ", e)
 
 # TODO: scan yesterday's log to ensure it does not missing running more than 1 day
 

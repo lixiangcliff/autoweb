@@ -135,7 +135,7 @@ try:
 
     driver.close()
 except Exception as e:
-    logger.error("Errors: ", e)
+    logger.error("Errors: ", str(e))
 
 # TODO: scan yesterday's log to ensure it does not missing running more than 1 day
 

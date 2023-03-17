@@ -50,7 +50,7 @@ if platform.system() == "Linux" and platform.machine() == "armv7l":
     # options.add_argument("--window-size=1024,768")  # set resolution
     options.binary_location = ("/usr/bin/chromium-browser")
     service = Service("/usr/bin/chromedriver")
-    log_dir = "/home/cliff/log/"
+    log_dir = "/home/cliff/log/get_appt"
     properties_path = '/home/cliff/.secret/properties'
 else:  # if not raspi and considering you're using Chrome
     service = Service(ChromeDriverManager().install())

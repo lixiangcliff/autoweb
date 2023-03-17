@@ -132,7 +132,7 @@ try:
             scheduled_date = dt.strptime(scheduled_date_str, date_pattern)
             found_date = dt.strptime(found_date_str, date_pattern)
             if found_date < scheduled_date:
-                logger.info("Found an early slot!!!")
+                logger.info("Found an early slot with date: ", found_date_str)
                 notify_by_slack(found_date_str)
                 # send slack message here!!!
             else:
@@ -142,7 +142,7 @@ try:
             driver.find_element(By.XPATH, next_week_button_xpath).click()
 
     wait_a_bit()
-
+    logger.info("Completed successfully")
     driver.close()
 except Exception as e:
     logger.error("Errors: ", str(e))

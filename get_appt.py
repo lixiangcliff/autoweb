@@ -44,8 +44,10 @@ properties_path = ''
 if platform.system() == "Linux" and platform.machine() == "armv7l":
     # if raspi
     options.add_argument("--headless")  # if you want it headless
+    options.add_argument("--window-size=1024,768")  # set resolution
     options.add_argument("--no-sandbox")  # Bypass OS security model
     options.add_argument("--disable-dev-shm-usage")  # overcome limited resource problems
+    # options.add_argument("--window-size=1024,768")  # set resolution
     options.binary_location = ("/usr/bin/chromium-browser")
     service = Service("/usr/bin/chromedriver")
     log_dir = "/home/cliff/log/"
@@ -98,7 +100,6 @@ try:
         service=service,
         options=options,
         )
-    driver.maximize_window()
     driver.get(appt_url)
 
     # login tracking
@@ -107,8 +108,14 @@ try:
     driver.find_element(By.ID, "orderid").send_keys(order_number)
     driver.find_element(By.NAME, "email").send_keys(email)
     driver.find_element(By.ID, "password").send_keys(pw)
-    driver.save_screenshot(log_dir + "screenshot.png")
+    wait_a_bit()
+    driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+    wait_a_bit()
+    # driver.save_screenshot(log_dir + "screenshot1.png")
     driver.find_element(By.ID, "loginButton").click()
+    driver.execute_script("window.scrollTo(0, 500);")
+    wait_a_bit()
+    # driver.save_screenshot(log_dir + "screenshot2.png")
 
     # reschedule
     logger.info("Reschedule")

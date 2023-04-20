@@ -89,7 +89,8 @@ pw = properties.get('pw')
 webhook_url = properties.get('webhook_url')
 
 date_pattern = '%m/%d/%Y'
-scheduled_date_str = '1/23/2024'
+earliest_date_str = '5/23/2023'
+scheduled_date_str = '6/1/2023'
 available_xpath = "//*[@id='weekDiv']//*[@class='col-md-2 calday ']"
 next_week_button_xpath = "//*[@id='nextWeekButton']//a[@href='#futureAppointmentSub']"
 
@@ -129,9 +130,10 @@ try:
             dayBox = dayBoxes[0]
             text = dayBox.text
             found_date_str = text.splitlines()[1]
-            scheduled_date = dt.strptime(scheduled_date_str, date_pattern)
             found_date = dt.strptime(found_date_str, date_pattern)
-            if found_date < scheduled_date:
+            earliest_date = dt.strptime(earliest_date_str, date_pattern)
+            scheduled_date = dt.strptime(scheduled_date_str, date_pattern)
+            if earliest_date <= found_date < scheduled_date:
                 logger.info("Found an early slot with date: ", found_date_str)
                 notify_by_slack(found_date_str)
                 # send slack message here!!!
